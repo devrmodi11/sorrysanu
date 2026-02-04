@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm So Sorry | For You</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --soft-pink: #ffb7c5;
+            --deep-purple: #120d1d;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            background-color: var(--deep-purple);
+            color: #fce7f3;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .serif { font-family: 'Instrument Serif', serif; }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 183, 197, 0.15);
+            border-radius: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .pulse-heart {
+            filter: drop-shadow(0 0 20px rgba(255, 183, 197, 0.4));
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #ffb7c5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #cursor-glow {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,183,197,0.08) 0%, rgba(255,183,197,0) 70%);
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-glow"></div>
+
+    <section class="h-screen flex flex-col items-center justify-center relative px-6 overflow-hidden">
+        <div class="z-10 text-center">
+            <div class="pulse-heart text-6xl mb-8">❤️</div>
+            <h1 class="serif text-5xl md:text-8xl italic mb-6 opacity-0 translate-y-10" id="main-title">
+                To the girl who <br> means everything.
+            </h1>
+            <p class="text-pink-200/60 tracking-[0.4em] uppercase text-xs opacity-0" id="scroll-hint">
+                Scroll to hear my heart
+            </p>
+        </div>
+        
+        <div class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
+            <div class="absolute top-1/4 left-10 w-64 h-64 bg-pink-500 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-1/4 right-10 w-80 h-80 bg-purple-500 rounded-full blur-[150px]"></div>
+        </div>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 py-32 space-y-40">
+        
+        <div class="reveal-card glass-card p-10 md:p-16">
+            <span class="text-pink-400 font-medium tracking-widest text-xs uppercase">The Realization</span>
+            <h2 class="serif text-4xl mt-4 mb-6 italic">I messed up, and it hurts.</h2>
+            <p class="text-lg text-pink-100/70 leading-relaxed">
+                Sometimes I'm not as thoughtful as I should be. I let my own stress or pride get in the way of what matters most: <b>us</b>. Seeing you upset is the hardest thing for me to handle.
+            </p>
+        </div>
+
+        <div class="reveal-card glass-card p-10 md:p-16 text-right">
+            <span class="text-pink-400 font-medium tracking-widest text-xs uppercase">The Promise</span>
+            <h2 class="serif text-4xl mt-4 mb-6 italic">I will do better.</h2>
+            <p class="text-lg text-pink-100/70 leading-relaxed">
+                I don’t just want to say "I'm sorry"—I want to show it. I want to be the person who makes you feel safe, loved, and heard. Every single day.
+            </p>
+        </div>
+
+        <div class="reveal-card glass-card p-10 md:p-16">
+            <span class="text-pink-400 font-medium tracking-widest text-xs uppercase">The Truth</span>
+            <h2 class="serif text-4xl mt-4 mb-6 italic">I love you more than words.</h2>
+            <p class="text-lg text-pink-100/70 leading-relaxed">
+                You’re my best friend, my favorite person, and my home. Life is just grey without your smile. Please let me make it up to you?
+            </p>
+        </div>
+
+    </section>
+
+    <section class="min-h-screen flex flex-col items-center justify-center px-6 relative">
+        <div class="glass-card p-12 text-center max-w-lg w-full relative z-10">
+            <h3 class="serif text-4xl mb-8 italic">Will you forgive me?</h3>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="forgive()" class="bg-pink-500 hover:bg-pink-400 text-white px-10 py-4 rounded-full font-bold transition-all transform hover:scale-110 active:scale-95 shadow-lg shadow-pink-500/20">
+                    YES, I Love You
+                </button>
+                <button onmouseover="dodge(this)" class="border border-pink-500/30 text-pink-200/50 px-10 py-4 rounded-full font-bold transition-all duration-75">
+                    No
+                </button>
+            </div>
+            <p id="forgive-msg" class="mt-8 text-pink-400 font-medium italic hidden">Thank you for being my better half. ❤️</p>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-pink-200/20 text-[10px] tracking-[0.5em] uppercase">
+        Only For You • 2026
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // Cursor Glow Effect
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // Animations
+        window.onload = () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Intro
+            gsap.to("#main-title", { opacity: 1, y: 0, duration: 1.5, delay: 0.5, ease: "power4.out" });
+            gsap.to("#scroll-hint", { opacity: 1, duration: 2, delay: 1.5 });
+
+            // Scroll Reveals
+            gsap.utils.toArray(".reveal-card").forEach(card => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    },
+                    opacity: 0,
+                    y: 60,
+                    duration: 1.2,
+                    ease: "power3.out"
+                });
+            });
+        };
+
+        // Forgiveness Logic
+        function dodge(btn) {
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth) - (window.innerWidth / 2);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight) - (window.innerHeight / 2);
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function forgive() {
+            document.getElementById('forgive-msg').classList.remove('hidden');
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ffb7c5', '#ffffff', '#ff3e8d']
+            });
+            
+            // Heart rain
+            const end = Date.now() + 3000;
+            (function frame() {
+              confetti({ particleCount: 2, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ffb7c5'] });
+              confetti({ particleCount: 2, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ffb7c5'] });
+              if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+    </script>
+</body>
+</html>
